@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../config/db')
 
-const Usuarios = sequelize.define('usuario', {
+const Usuario = sequelize.define('usuario', {
     nome: {
         type: DataTypes.STRING,
         allowNull: false
@@ -19,6 +19,5 @@ const Usuarios = sequelize.define('usuario', {
     timestamps: false
 })
 
-Usuarios.sync()
-
-module.exports=Usuarios
+Usuario.sync()
+module.exports=Usuario

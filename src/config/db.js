@@ -1,10 +1,11 @@
 const Sequelize = require('sequelize')
 const mysql = require('mysql2/promise')
+require('dotenv').config()
 
-const local_db = 'localhost'
-const database_db = 'todo_api'
-const username_db = 'juakadb'
-const password_db = 'juaka123'
+const local_db = process.env.LOCAL_DB
+const database_db = process.env.DATABASE_DB
+const username_db = process.env.USERNAME_DB
+const password_db = process.env.PASSWORD_DB
 
 mysql.createConnection({
     user: username_db,

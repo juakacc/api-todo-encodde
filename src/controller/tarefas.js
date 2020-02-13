@@ -1,37 +1,42 @@
 const express = require('express')
-const Tarefas = require('../repositorio/Tarefas')
+const Tarefa = require('../model/Tarefa')
 const HttpStatus = require('http-status-codes')
+const checarAuth = require('../middleware/checar-auth')
 
 const router = express.Router()
 
-router.get('/', (req, res, next) => {
-    Tarefas.findAll()
+router.get('/', checarAuth, (req, res, next) => {
+    Tarefa.findAll()
     .then(tarefas => {
         res.status(HttpStatus.OK).json(tarefas)
     })
     .catch(err => {
         console.log(err)
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).send()
     })
 })
 
-router.get('/:tarefaId', (req, res, next) => {
+router.get('/:tarefaId', checarAuth, (req, res, next) => {
     const id = req.params.tarefaId
 
-    Tarefas.findByPk(id)
+    Tarefa.findByPk(id)
     .then(tarefa => {
-        if (tarefa != null) {
+        if (tarefa) {
             res.status(HttpStatus.OK).json(tarefa)
         } else {
-            res.status(HttpStatus.NOT_FOUND).send()
+            res.status(HttpStatus.NOT_FOUND).json({
+                mensagem: 'Tarefa não encontrada'
+            })
         }
     })
     .catch(err => {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err)
+        console.log(err)
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).send()
     })
 })
 
-router.post('/', (req, res, next) => {
-    Tarefas.create({
+router.post('/', checarAuth, (req, res, next) => {
+    Tarefa.create({
         titulo: req.body.titulo,
         descricao: req.body.descricao,
         status: req.body.status,

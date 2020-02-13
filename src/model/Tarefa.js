@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../config/db')
-const Usuario = require('./Usuarios')
+const Usuario = require('./Usuario')
 
-const Tarefas = sequelize.define('tarefa', {
+const Tarefa = sequelize.define('tarefa', {
     titulo: {
         type: DataTypes.STRING,
         allowNull: false
@@ -28,6 +28,5 @@ const Tarefas = sequelize.define('tarefa', {
     timestamps: false
 })
 
-Tarefas.sync()
-
-module.exports=Tarefas
+Tarefa.sync()
+module.exports=Tarefa
