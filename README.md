@@ -7,7 +7,8 @@ A API foi desenvolvida utilizando a tecnologia [Node.js](https://nodejs.org/en/)
 
 ## Requisitos
 
-- Node.js e NPM instalados
+- Node.js e NPM instalados;
+- Mysql server.
 
 ## Instalação
 
