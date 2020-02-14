@@ -8,6 +8,8 @@ router.get('/', checarAuth, TarefaService.tarefas_get_all)
 
 router.get('/:tarefaId', checarAuth, TarefaService.tarefas_get_tarefa)
 
+router.put('/:tarefaId', checarAuth, TarefaService.tarefas_update_tarefa)
+
 router.post('/', checarAuth, TarefaService.tarefas_create_tarefa)
 
 module.exports = router

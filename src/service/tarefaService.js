@@ -41,21 +41,51 @@ exports.tarefas_get_tarefa = (req, res, next) => {
 }
 
 exports.tarefas_create_tarefa = (req, res, next) => {
+    const status = req.body.status
 
-    const status = req.body.status.toLowerCase()
-
-    if (status != 'pendente' && 
-        status != 'fazendo' &&
-        status != 'concluida') {
-            return res.status(HttpStatus.BAD_REQUEST).json({
-                mensagem: 'Status inválido. Valores válidos: pendente, fazendo e concluida'
-            })
+    if (!status_valid(status)) {
+        return res.status(HttpStatus.BAD_REQUEST).json({
+            mensagem: 'Status inválido. Valores válidos: pendente, fazendo e concluida'
+        })
     }
     Tarefa.create({
         titulo: req.body.titulo,
         descricao: req.body.descricao,
         status: status,
         usuario_id: req.userData.id
+    })
+    .then(tarefa => {
+        res.status(HttpStatus.CREATED).json(tarefa)
+    })
+    .catch(err => {
+        res.status(HttpStatus.BAD_REQUEST).json({
+            mensagem: err.name
+        })
+    })    
+}
+
+const status_valid = status => {
+    const s = status.toLowerCase()
+    return s == 'pendente' || s != 'fazendo' || s != 'concluida'
+}
+
+exports.tarefas_update_tarefa = (req, res, next) => {
+    const status = req.body.status
+
+    if (!status_valid(status)) {
+        return res.status(HttpStatus.BAD_REQUEST).json({
+            mensagem: 'Status inválido. Valores válidos: pendente, fazendo e concluida'
+        })
+    }
+    Tarefa.update({
+        titulo: req.body.titulo,
+        descricao: req.body.descricao,
+        status: status,
+        usuario_id: req.userData.id
+    }, {
+        where: {
+            id: req.params.tarefaId
+        }
     })
     .then(tarefa => {
         res.status(HttpStatus.CREATED).json(tarefa)

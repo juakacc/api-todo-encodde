@@ -78,7 +78,7 @@ exports.usuarios_login = (req, res, next) => {
             id: usuario[0].id
         }, 
         process.env.SECRET_KEY_TOKEN, 
-        { expiresIn: '1h' })
+        { expiresIn: '30days' }) // tempo longo para testes
 
         return res.status(HttpStatus.OK).json({
             mensagem: 'Autenticado com sucesso',
